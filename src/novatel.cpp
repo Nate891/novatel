@@ -928,7 +928,7 @@ void Novatel::BufferIncomingData(unsigned char *message, unsigned int length)
 		}
 	}	// end for
 }
-
+void 
 void Novatel::ParseBinary(unsigned char *message, size_t length, BINARY_LOG_TYPE message_id) {
     //stringstream output;
     //output << "Parsing Log: " << message_id << endl;
@@ -942,6 +942,7 @@ void Novatel::ParseBinary(unsigned char *message, size_t length, BINARY_LOG_TYPE
     switch (message_id) {
         case BESTGPSPOS_LOG_TYPE:
             Position best_gps;
+
             memcpy(&best_gps, message, sizeof(best_gps));
             if (best_gps_position_callback_)
             	best_gps_position_callback_(best_gps, read_timestamp_);
@@ -1100,7 +1101,7 @@ void Novatel::ParseBinary(unsigned char *message, size_t length, BINARY_LOG_TYPE
 	        	// asdf << "\nMessage from BufferIncomingData\n";
 	        	// log_info_(asdf.str().c_str()); asdf.str("");
 	        	// printHex((char*)message,length);
-
+asdfadf
 	        	
 	        	//printHex((char*)cmp_ranges.range_data[0],sizeof(24*((int32_t)*(message+header_length))));
 
