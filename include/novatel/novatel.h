@@ -54,6 +54,8 @@
 // Serial Headers
 #include "serial/serial.h"
 
+ #include <fstream>  // used for NATE
+
 namespace novatel {
 
 // used to convert lat and long to UTM coordinates
@@ -109,6 +111,16 @@ class Novatel
 public:
 	Novatel();
 	~Novatel();
+
+
+//NATE
+
+  void WriteToFile(unsigned char *message, size_t length);
+
+  bool OpenFile(string name);
+  fstream file;
+
+
 
 	/*!
 	 * Connects to the Novatel receiver given a serial port.

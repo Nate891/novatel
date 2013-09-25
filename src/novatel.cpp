@@ -840,9 +840,30 @@ void Novatel::ReadSerialPort() {
 		// add data to the buffer to be parsed
 		BufferIncomingData(buffer, len);
 	}
-	
 
 }
+
+//********************************************************************************************************
+
+
+bool OpenFile(string name)
+{
+    file.open(name,ios::in, ios::binary, ios::ate);
+    return file.is_open(); 
+}
+
+
+// NATE
+void Novatel::WriteToFile(unsigned char* message, size_t length)
+{
+    if(file.is_open())
+    {
+        file.write(message, length);
+    }
+}
+
+//*********************************************************************************************************
+
 
 void Novatel::BufferIncomingData(unsigned char *message, unsigned int length)
 {
@@ -928,7 +949,14 @@ void Novatel::BufferIncomingData(unsigned char *message, unsigned int length)
 		}
 	}	// end for
 }
-void 
+
+
+
+
+
+
+
+
 void Novatel::ParseBinary(unsigned char *message, size_t length, BINARY_LOG_TYPE message_id) {
     //stringstream output;
     //output << "Parsing Log: " << message_id << endl;
@@ -956,6 +984,10 @@ void Novatel::ParseBinary(unsigned char *message, size_t length, BINARY_LOG_TYPE
         case BESTPOSB_LOG_TYPE:
             Position best_pos;
             memcpy(&best_pos, message, sizeof(best_pos));
+
+//NATE
+            WriteToFile(message, length);
+
             if (best_position_callback_)
             	best_position_callback_(best_pos, read_timestamp_);
             break;
@@ -1094,6 +1126,9 @@ void Novatel::ParseBinary(unsigned char *message, size_t length, BINARY_LOG_TYPE
 	        	memcpy(&cmp_ranges.crc, message+header_length+payload_length, 4);
 	          
 
+              //NATE
+                WriteToFile(message, length);
+
 	        	// asdf << "sizeof after memcpy : " << sizeof(cmp_ranges) << "\n";
 	        	// asdf << "crc after shoving: " ;
 						// log_info_(asdf.str().c_str()); asdf.str("");
@@ -1101,7 +1136,6 @@ void Novatel::ParseBinary(unsigned char *message, size_t length, BINARY_LOG_TYPE
 	        	// asdf << "\nMessage from BufferIncomingData\n";
 	        	// log_info_(asdf.str().c_str()); asdf.str("");
 	        	// printHex((char*)message,length);
-asdfadf
 	        	
 	        	//printHex((char*)cmp_ranges.range_data[0],sizeof(24*((int32_t)*(message+header_length))));
 
@@ -1120,6 +1154,12 @@ asdfadf
 	            log_warning_(ss.str().c_str());
 	          } else {
 	            memcpy(&ephemeris, message, sizeof(ephemeris));
+
+
+//NATE
+                 WriteToFile(message, length);
+
+
 	            if (gps_ephemeris_callback_)
 	            	gps_ephemeris_callback_(ephemeris, read_timestamp_);
 	          }

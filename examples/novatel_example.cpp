@@ -23,8 +23,11 @@ int main(int argc, char **argv)
     int baudrate=115200;
     istringstream(argv[2]) >> baudrate;
 
-
     Novatel my_gps;
+
+    my_gps.OpenFile("binary")
+
+
     bool result = my_gps.Connect(port,baudrate);
 
     if (result) {
@@ -35,7 +38,7 @@ int main(int argc, char **argv)
         return 0;
     }
 
-    //while(1);
+    while(1);
 
     my_gps.Disconnect();
 
