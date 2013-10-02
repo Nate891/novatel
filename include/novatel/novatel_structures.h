@@ -74,18 +74,6 @@ namespace novatel {
 // HEADER STRUCTURES
 //*******************************************************************************
 
-//Added for reading a binary file
-
-  void WriteToFile(unsigned char *message, size_t length);
-  ifstream binary_data;
-  bool OpenFile(string name);
-
-
-
-
-
-
-
 //! Header prepended to OEM4 binary messages
 PACK(
 struct Oem4BinaryHeader
