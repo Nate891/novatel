@@ -112,16 +112,6 @@ public:
 	Novatel();
 	~Novatel();
 
-
-//NATE
-
-  void WriteToFile(unsigned char *message, size_t length);
-
-  bool OpenFile(string name);
-  fstream file;
-
-
-
 	/*!
 	 * Connects to the Novatel receiver given a serial port.
 	 *

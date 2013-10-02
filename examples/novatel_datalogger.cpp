@@ -1,10 +1,30 @@
 #include <string>
-#include <iostream>
-#include <sstream>
-
+#include <fstream>
 #include "novatel/novatel.h"
+
 using namespace novatel;
 using namespace std;
+
+std::fstream file_;
+
+void BestPositionCallback(Position best_position, double time_stamp) {
+
+
+}
+
+
+
+bool OpenFile(std::string name) {
+    file.open(name.c_str(),ios::out, ios::binary, ios::app);
+    return file.is_open();
+}
+
+void WriteToFile(unsigned char *message, size_t length) {
+    if(file.is_open())
+    {
+        file.write(message, length);
+    }
+}
 
 
 int main(int argc, char **argv)
@@ -19,6 +39,8 @@ int main(int argc, char **argv)
 
     Novatel my_gps;
 
+    my_gps.set_best_gps_position_callback(
+                boost::bind(&BestPositionCallback, this, _1, _2));
 
 
     bool result = my_gps.Connect(port,baudrate);
